@@ -18,11 +18,11 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void createUsersTable() {
         try {
-            String createUserTableRequest = "CREATE TABLE IF NOT EXISTS User("
+            String createUserTableRequest = "CREATE TABLE IF NOT EXISTS User ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "name VARCHAR(100), "
-                + "last_name VARCHAR(100))"
-                + "age TINYINT)";
+                + "last_name VARCHAR(100), "
+                + "age TINYINT);";
             util.executeUpdate( createUserTableRequest );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void dropUsersTable() {
         try {
-            util.executeUpdate( "DROP TABLE IF EXISTS User" );
+            util.executeUpdate( "DROP TABLE IF EXISTS User;" );
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        String saveUserRequest = String.format( "INSERT INTO user (name, last_name, age) VALUES (%s, %s, %d)",
+        String saveUserRequest = String.format( "INSERT INTO User (name, last_name, age) VALUES ('%s', '%s', %d);",
             name,
             lastName,
             age
@@ -54,7 +54,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        String removeUserRequest = String.format("DELETE FROM user WHERE id = %d",
+        String removeUserRequest = String.format("DELETE FROM User WHERE id = %d;",
             id
         );
         try {
@@ -66,7 +66,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        String getAllUsersRequest = "SELECT * FROM users";
+        String getAllUsersRequest = "SELECT * FROM User;";
         try {
             ResultSet rs = util.executeQuery( getAllUsersRequest );
             List<User> userList = new ArrayList<>();
@@ -92,7 +92,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        String cleanUsersRequest = "TRUNCATE TABLE user";
+        String cleanUsersRequest = "TRUNCATE TABLE User;";
         try {
             util.executeUpdate( cleanUsersRequest );
         } catch (SQLException e) {

@@ -2,12 +2,13 @@ package jm.task.core.jdbc.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Util {
     private static volatile Util instance;
-    private static final String URL = "jdbc:mysql://localhost:3306/your_database_name";
+    private static final String URL = "jdbc:mysql://localhost:3306/Users";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
     private Statement statement;
@@ -21,8 +22,12 @@ public class Util {
         }
     }
 
-    public void execute( String command ) throws SQLException {
-        statement.executeUpdate( command );
+    public void executeUpdate( String request ) throws SQLException {
+        statement.executeUpdate( request );
+    }
+
+    public ResultSet executeQuery( String request ) throws SQLException {
+        return statement.executeQuery( request );
     }
 	
     public static Util getInstance() {
